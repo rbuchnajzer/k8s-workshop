@@ -1,0 +1,19 @@
+# Remote User
+user=centos
+# Remote Home
+home=/home/$user
+# VM created for kubernetes cluster
+servers=("master" "node1" "node2" "node3")
+
+# Node dedicated for ingress controller
+ingress_node=node1
+ingress=$(doctl compute  droplet list $ingress_node --format "PublicIPv4" --no-header)
+
+fingerprint() {
+    pubkeypath="$1"
+    ssh-keygen -E md5 -lf "$pubkeypath" | awk '{ print $2 }' | cut -c 5-
+}
+sshkey=$(fingerprint ~/.ssh/id_rsa.pub)
+
+
+master=${servers[0]}
