@@ -2,8 +2,11 @@
 user=centos
 # Remote Home
 home=/home/$user
+
+k8s_image=centos-7-x64
 # VM created for kubernetes cluster
 servers=("master" "node1" "node2" "node3")
+server_size=("4gb" "4gb" "4gb" "4gb")
 
 # Node dedicated for ingress controller
 ingress_node=node1

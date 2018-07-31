@@ -67,11 +67,4 @@ kubectl create secret tls kubernetes-dashboard-certs \
   --key=/home/centos/certs/dashboard.key \
   --namespace kube-system
 
-
-#kubectl create serviceaccount cluster-admin-dashboard-sa
-#
-#kubectl create clusterrolebinding cluster-admin-dashboard-sa \
-#  --clusterrole=cluster-admin \
-#  --serviceaccount=kub-system:cluster-admin-dashboard-sa
-
 EOT

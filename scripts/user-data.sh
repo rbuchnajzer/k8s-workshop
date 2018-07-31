@@ -34,13 +34,16 @@ packages:
   - kubectl
   - git
 runcmd:
+  - modprobe br_netfilter
+  - sed -i 's/\SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
   - setenforce 0
-  - systemctl enable docker
-  - systemctl start docker
-  - systemctl enable kubelet
-  - systemctl start kubelet
   - touch /etc/cloud/cloud-init.disabled
   - hostnamectl set-hostname $HOSTNAME
   - hostnamectl set-icon-name $HOSTNAME
   - sysctl net.bridge.bridge-nf-call-iptables=1
-  - sysctl net.bridge.bridge-nf-call-ip6tables=1  # set port and disable authentication with passwords
+  - sysctl net.bridge.bridge-nf-call-ip6tables=1
+  - systemctl enable docker
+  - systemctl start docker
+  - systemctl enable kubelet
+  - systemctl start kubelet
+    
