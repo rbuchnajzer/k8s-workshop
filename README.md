@@ -127,7 +127,7 @@ cd ~/.ssh/repos/k8s-workshop/scripts
 The installation sripts are available as a docker image.
 
 ```
-docker run -it pellepedro/k8s-install:0.1.0
+docker run -it -e DIGITALOCEAN_ACCESS_TOKEN="your_DO_token" pellepedro/k8s-install:0.1.0
 ```
 
 ## Copy and paste your public and private ssh key to the container
