@@ -123,3 +123,20 @@ cd ~/.ssh/repos/k8s-workshop/scripts
 
 
 
+# Docker Image
+The installation sripts are available as a docker image.
+
+```
+docker run -it pellepedro/k8s-install:0.1.0
+```
+
+## Copy and paste your public and private ssh key to the container
+```
+vim /root/.ssh/id_rsa.pub
+vim /root/.ssh/id_rsa
+```
+
+## Installation scripts are available at.
+```
+cd ~/scripts/digitalocean/
+```
