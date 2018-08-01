@@ -16,7 +16,7 @@ write_files:
   - path: /etc/motd
     owner: root:root
     permissions: '0644'
-    content: |
+    content: | 
  
       Bootstrap Kubernetes Cluster
  

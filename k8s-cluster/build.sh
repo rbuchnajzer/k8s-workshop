@@ -1,0 +1,1 @@
+docker build -t pellepedro/k8s-install:0.1.0 . --squash

@@ -1,0 +1,31 @@
+#cloud-config
+write_files:
+  - path: /root/.ssh/config
+    owner: root:root
+    permissions: '0644'
+    content: |
+
+      Host *
+        StrictHostKeyChecking no
+        UserKnownHostsFile=/dev/null
+
+      Include /root/install/digitalocean/ssh-config
+
+  - path: /etc/motd
+    owner: root:root
+    permissions: '0644'
+    content: |
+      Start installer using the following command
+
+      docker run -it -v /root/.ssh:/root/.ssh -e DIGITALOCEAN_ACCESS_TOKEN="your_DO_token" pellepedro/k8s-install:0.1.0
+ 
+packages:
+  - docker.io
+runcmd:
+  - touch /etc/cloud/cloud-init.disabled
+  - hostnamectl set-hostname $HOSTNAME
+  - hostnamectl set-icon-name $HOSTNAME
+  - systemctl enable docker
+  - systemctl start docker
+  - ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa
+    
