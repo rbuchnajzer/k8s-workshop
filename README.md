@@ -16,4 +16,27 @@ The DNS service from nip.io is used to generate url's for the Dashboard, Prometh
 
 Create a droplet on digital ocean using the user data file under admin-host
 
-##
+
+
+# Kubernetes commands
+
+## List Deployments
+```
+kubectl get deployments -n kube-sustem
+```
+
+## List pods
+```
+kubectl get pods -n kube-sustem
+```
+
+## List Services
+```
+kubectl get svc -n kube-sustem
+```
+
+## List Endpoints
+```
+kubectl get ep -n kube-sustem
+```
+
