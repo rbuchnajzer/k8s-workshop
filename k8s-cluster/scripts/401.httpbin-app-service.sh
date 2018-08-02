@@ -2,7 +2,7 @@
 . ./env
 
 ssh $master << EOT
-cat << EOF > httpbin-app.yaml
+cat << EOF > httpbin-app-service.yaml
 ---
 apiVersion: v1
 kind: Service
@@ -17,24 +17,6 @@ spec:
   selector:
     app: httpbin
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: httpbin
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: httpbin
-    spec:
-      containers:
-      - image: docker.io/citizenstig/httpbin
-        imagePullPolicy: IfNotPresent
-        name: httpbin
-        ports:
-        - containerPort: 8000
-----
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -51,5 +33,5 @@ spec:
           servicePort: 8000
 EOF
 
-kubectl apply -f httpbin-app.yaml
+kubectl apply -f httpbin-app-service.yaml
 EOT

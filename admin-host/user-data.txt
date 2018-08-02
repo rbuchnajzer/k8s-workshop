@@ -15,12 +15,13 @@ write_files:
     owner: root:root
     permissions: '0644'
     content: |
-      Start installer using the following command
+      Start the installer container using the following command
 
       docker run -it -v /root/.ssh:/root/.ssh -e DIGITALOCEAN_ACCESS_TOKEN="your_DO_token" pellepedro/k8s-install:0.1.0
  
 packages:
   - docker.io
+  - git
 runcmd:
   - touch /etc/cloud/cloud-init.disabled
   - hostnamectl set-hostname $HOSTNAME

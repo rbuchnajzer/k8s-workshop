@@ -1,6 +1,7 @@
 #!/bin/bash
 . ./env
 
+namespace=services
 ssh $master << EOT
 cat << EOF > app.yaml
 ---
@@ -17,7 +18,7 @@ spec:
     spec:
       containers:
       - name: metrics-app
-        image: fabxc/instrumented_app
+        image: pellepedro/metrics:0.1.0
         ports:
         - name: web
           containerPort: 8080
@@ -25,37 +26,52 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: metrics-app
+  name: metrics-service
   labels:
     prometheus: kube-prometheus
-    app: metrics-app
+    app: metrics-service
 spec:
   selector:
     app: metrics-app
   ports:
   - name: web
     port: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: metrics-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: metrics.$ingress.nip.io
+    http:
+      paths:
+      - backend:
+          serviceName: metrics-service
+          servicePort: 8080
 EOF
 
-kubectl create namespace metrics-app
-kubectl apply -f app.yaml -n metrics-app
+kubectl create namespace $namespace
+kubectl apply -f app.yaml -n $namespace
 rm app.yaml
 
 cat << EOF > service-monitor.yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: metrics-app
+  name: metrics-service
   namespace: monitoring
   labels:
     prometheus: kube-prometheus
 spec:
   selector:
     matchLabels:
-      app: metrics-app
+      app: metrics-service
   namespaceSelector:
     matchNames:
-       - metrics-app
+       - $namespace
   endpoints:
   - port: web
     interval: 10s

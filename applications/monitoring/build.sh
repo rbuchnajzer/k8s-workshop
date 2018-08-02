@@ -1,0 +1,1 @@
+docker build -t pellepedro/metrics:0.1.0 . --squash

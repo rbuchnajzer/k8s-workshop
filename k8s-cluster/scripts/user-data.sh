@@ -18,21 +18,29 @@ write_files:
     permissions: '0644'
     content: | 
  
-      Bootstrap Kubernetes Cluster
+      Kubernetes Commands
  
       1. Initializes cluster master node:
-      kubeadm init --apiserver-advertise-address $(hostname -i) --pod-network-cidr=192.168.0.0/16
- 
- 
-      2. Initialize calico networking:
-      kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
- 
+      #. List Namespaces
+      kubectl get namespaces
+
+      #. List PODs (e.g. in namespace kube-system)
+      kubectl get pods -n kube-system
+
+      #. List Endpoints (e.g. in namespace kube-system)
+      kubectl get ep -n kube-system
+
+      #. List Services (e.g. in namespace kube-system)
+      kubectl get svc -n kube-system
+
+      #. List Ingress Rules (e.g. in namespace kube-system)
+      kubectl get ing -n kube-system
+      
 packages:
   - docker
   - kubelet
   - kubeadm 
   - kubectl
-  - git
 runcmd:
   - modprobe br_netfilter
   - sed -i 's/\SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
