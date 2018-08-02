@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	namespace = "EMC-k8s"
+	namespace = "k8slab"
 
 	requestHistogram = prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{

@@ -26,10 +26,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: metrics-service
+  name: metrics-app
   labels:
     prometheus: kube-prometheus
-    app: metrics-service
+    app: metrics-app
 spec:
   selector:
     app: metrics-app
@@ -49,7 +49,7 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: metrics-service
+          serviceName: metrics-app
           servicePort: 8080
 EOF
 
@@ -61,14 +61,14 @@ cat << EOF > service-monitor.yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: metrics-service
+  name: metrics-app
   namespace: monitoring
   labels:
     prometheus: kube-prometheus
 spec:
   selector:
     matchLabels:
-      app: metrics-service
+      app: metrics-app
   namespaceSelector:
     matchNames:
        - $namespace
